@@ -21,6 +21,7 @@ pipeline {
             
           }
       }
+      }
       stage('trigger') {
         steps {
           script {
@@ -31,7 +32,7 @@ pipeline {
           }
         }
       }
-  }
+  
 }
 }
 }
