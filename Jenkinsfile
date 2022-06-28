@@ -1,0 +1,33 @@
+pipeline {
+  agent agent {
+    kubernetes {
+      defaultContainer 'terragrunt-azure'
+      yamlFile 'terraformcode/resources/agentPodTemplate.yaml'
+    }
+  parameters {
+      base64File 'INPUTYAML'
+  }
+  stages {
+      stage('test') {
+          steps {
+            withFileParameter('INPUTYAML') {
+                sh '''
+                  cat $INPUTYAML > "${WORKSPACE}/env.yaml"
+                  cat $INPUTYAML
+                  cat ${WORKSPACE}/env.yaml
+                '''
+            }    
+          }
+      }
+      stage('trigger') {
+        steps {
+          script {
+              String fileContents = new File("${WORKSPACE}/env.yaml").getText('UTF-8')
+              build job: "trigger-test2", 
+                parameters: [base64File(name: 'INPUTYAML', base64: Base64.encoder.encodeToString("$fileContents".bytes))]
+            echo "success"
+          }
+        }
+      }
+  }
+}
