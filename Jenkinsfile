@@ -1,5 +1,5 @@
 pipeline {
-  agent agent {
+  agent {
     kubernetes {
       defaultContainer 'terragrunt-azure'
       yamlFile 'agentPodTemplate.yaml'
