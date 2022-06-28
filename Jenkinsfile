@@ -10,7 +10,7 @@ pipeline {
   stages {
       stage('test') {
           steps {
-            ansiColor('xterm') {{
+            ansiColor('xterm') {
             withFileParameter('INPUTYAML') {
                 sh '''
                   cat $INPUTYAML > "${WORKSPACE}/env.yaml"
@@ -18,7 +18,7 @@ pipeline {
                   cat ${WORKSPACE}/env.yaml
                 '''
             }    
-            }
+            
           }
       }
       stage('trigger') {
