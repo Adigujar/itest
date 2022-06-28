@@ -1,14 +1,16 @@
 pipeline {
-  agent {
-    kubernetes {
-      defaultContainer 'terragrunt-azure'
-      yamlFile 'agentPodTemplate.yaml'
-    }
+  agent none
   parameters {
       base64File 'INPUTYAML'
   }
   stages {
       stage('test') {
+          agent {
+              kubernetes {
+              defaultContainer 'terragrunt-azure'
+              yamlFile 'agentPodTemplate.yaml'
+            }
+          }
           steps {
             ansiColor('xterm') {
             withFileParameter('INPUTYAML') {
@@ -23,6 +25,12 @@ pipeline {
       }
       }
       stage('trigger') {
+          agent {
+              kubernetes {
+              defaultContainer 'terragrunt-azure'
+              yamlFile 'agentPodTemplate.yaml'
+            }
+          }
         steps {
           script {
               String fileContents = new File("${WORKSPACE}/env.yaml").getText('UTF-8')
@@ -33,6 +41,5 @@ pipeline {
         }
       }
   
-}
 }
 }
