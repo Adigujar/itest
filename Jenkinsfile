@@ -2,7 +2,7 @@ pipeline {
   agent agent {
     kubernetes {
       defaultContainer 'terragrunt-azure'
-      yamlFile 'terraformcode/resources/agentPodTemplate.yaml'
+      yamlFile 'agentPodTemplate.yaml'
     }
   parameters {
       base64File 'INPUTYAML'
