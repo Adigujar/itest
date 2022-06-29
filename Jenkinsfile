@@ -39,7 +39,7 @@ pipeline {
           }
         steps {
           script {
-              String fileContents = new File("${WORKSPACE}/env.yaml").getText('UTF-8')
+              String fileContents = readFile("${WORKSPACE}/env.yaml").getText('UTF-8')
               build job: "trigger-test2", 
               parameters: [base64File(name: 'INPUTYAML', base64: Base64.encoder.encodeToString("$fileContents".bytes))]
               echo "success"
