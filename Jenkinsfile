@@ -13,6 +13,7 @@ pipeline {
                   cat $INPUTYAML > "${WORKSPACE}/env.yaml"
                   cat $INPUTYAML
                   cat ${WORKSPACE}/env.yaml
+                  echo " ${currentBuild.result}"
                 '''
             }    
       }
